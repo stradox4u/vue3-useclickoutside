@@ -23,7 +23,13 @@
   "peerDependencies": {
     "vue": "^3.3.4"
   },
-  "keywords": ["click", "outside", "click outside", "vue", "vue3"],
+  "keywords": [
+    "click",
+    "outside",
+    "click outside",
+    "vue",
+    "vue3"
+  ],
   "author": "Umar Adejoh",
   "license": "MIT",
   "devDependencies": {
