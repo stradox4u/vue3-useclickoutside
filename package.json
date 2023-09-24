@@ -4,7 +4,7 @@
   "description": "Use a callback to run actions when a user clicks outside an element",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stradox4u/vue3-useclickoutside.git"
+    "url": "git+https://github.com/stradox4u/vue3-useclickoutside.git"
   },
   "type": "module",
   "main": "./dist/use-click-outside.umd.cjs",
