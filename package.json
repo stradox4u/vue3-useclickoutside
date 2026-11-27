@@ -7,18 +7,28 @@
     "url": "git+https://github.com/stradox4u/vue3-useclickoutside.git"
   },
   "type": "module",
+  "files": ["dist"],
   "main": "./dist/use-click-outside.umd.cjs",
   "module": "./dist/use-click-outside.js",
+  "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/use-click-outside.js",
-      "require": "./dist/use-click-outside.umd.cjs",
-      "types": "./dist/types/index.d.ts"
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/use-click-outside.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.cts",
+        "default": "./dist/use-click-outside.umd.cjs"
+      }
     }
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "vite build && vue-tsc --emitDeclarationOnly && mv dist/src dist/types"
+    "test": "vitest run --exclude \"tests/browser/**\" && npm run test:package",
+    "test:package": "node --test tests/package.mjs",
+    "test:browser": "playwright test --config tests/browser/playwright.config.mjs",
+    "build": "vite build && tsc -p tsconfig.json && node -e \"require('node:fs').copyFileSync('dist/types/index.d.ts', 'dist/types/index.d.cts')\"",
+    "prepack": "npm run build"
   },
   "peerDependencies": {
     "vue": "^3.3.4"
@@ -33,10 +43,11 @@
   "author": "Umar Adejoh",
   "license": "MIT",
   "devDependencies": {
-    "@types/vue": "^2.0.0",
-    "typescript": "^5.2.2",
-    "vite": "^4.4.9",
-    "vite-plugin-vue": "^0.0.1",
-    "vue-tsc": "^1.8.13"
+    "@playwright/test": "^1.65.1",
+    "jsdom": "^31.0.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.4.0",
+    "vitest": "^5.1.2",
+    "vue": "^3.5.46"
   }
 }

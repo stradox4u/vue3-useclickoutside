@@ -1,21 +1,21 @@
-import { resolve } from 'path';
-
+import { fileURLToPath } from 'node:url';
 
 export default {
   build: {
+    target: 'es2020',
     lib: {
-      entry: resolve(__dirname, 'src', 'index.ts'),
+      entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
       name: 'UseClickOutside',
       fileName: 'use-click-outside',
+      formats: ['es', 'umd'],
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: ['vue'],
       output: {
         globals: {
           vue: 'Vue',
         },
-        formats: ['es', 'cjs', 'umd']
-      }
-    }
+      },
+    },
   },
-}
+};
