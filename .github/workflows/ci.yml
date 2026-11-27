@@ -26,3 +26,7 @@ jobs:
         env:
           VUE_VERSION: ${{ matrix.vue }}
       - run: npm test
+      - if: matrix.vue == 'locked'
+        run: npx playwright install --with-deps --only-shell chromium firefox webkit
+      - if: matrix.vue == 'locked'
+        run: npm run test:browser

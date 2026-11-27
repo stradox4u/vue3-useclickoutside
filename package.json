@@ -24,8 +24,9 @@
     }
   },
   "scripts": {
-    "test": "vitest run && npm run test:package",
+    "test": "vitest run --exclude \"tests/browser/**\" && npm run test:package",
     "test:package": "node --test tests/package.mjs",
+    "test:browser": "playwright test --config tests/browser/playwright.config.mjs",
     "build": "vite build && tsc -p tsconfig.json && node -e \"require('node:fs').copyFileSync('dist/types/index.d.ts', 'dist/types/index.d.cts')\"",
     "prepack": "npm run build"
   },
@@ -42,6 +43,7 @@
   "author": "Umar Adejoh",
   "license": "MIT",
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "jsdom": "^31.0.1",
     "typescript": "^7.0.2",
     "vite": "^8.4.0",

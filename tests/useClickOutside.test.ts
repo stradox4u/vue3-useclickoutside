@@ -2,7 +2,7 @@
 
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { createApp, ref, type App, type Ref } from 'vue';
-import { useClickOutside } from '../src/index';
+import { useClickOutside, type UseClickOutsideOptions } from '../src/index';
 
 let app: App | undefined;
 let root: HTMLElement;
@@ -10,12 +10,16 @@ let target: HTMLElement;
 let child: HTMLButtonElement;
 let outside: HTMLButtonElement;
 
-function mountComposable(targetRef: Ref<HTMLElement | null>, callback: () => void) {
+function mountComposable(
+  targetRef: Ref<HTMLElement | null>,
+  callback: () => void,
+  options?: UseClickOutsideOptions,
+) {
   const container = document.createElement('div');
   root.append(container);
   app = createApp({
     setup() {
-      useClickOutside(targetRef, callback);
+      useClickOutside(targetRef, callback, options);
       return () => null;
     },
   });
@@ -61,6 +65,32 @@ test('calls the callback once per outside click', () => {
 
   outside.click();
   expect(callback).toHaveBeenCalledTimes(2);
+});
+
+test('ignores the current elements and their descendants in the ignore list', () => {
+  const callback = vi.fn();
+  const opener = document.createElement('button');
+  const icon = document.createElement('span');
+  opener.append(icon);
+  root.append(opener);
+
+  const openerRef = ref<HTMLButtonElement | null>(null);
+  mountComposable(ref(target), callback, { ignore: [ref<HTMLElement>(), openerRef] });
+
+  opener.click();
+  expect(callback).toHaveBeenCalledOnce();
+
+  openerRef.value = opener;
+  opener.click();
+  icon.click();
+  expect(callback).toHaveBeenCalledOnce();
+
+  outside.click();
+  expect(callback).toHaveBeenCalledTimes(2);
+
+  openerRef.value = null;
+  icon.click();
+  expect(callback).toHaveBeenCalledTimes(3);
 });
 
 test('starts detecting clicks once the target ref is set', () => {
