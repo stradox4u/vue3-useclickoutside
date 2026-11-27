@@ -28,3 +28,14 @@ useClickOutside(relevantRef, () => {
   </div>
 </template>
 ```
+
+## Development
+
+Use Node.js 24.15 or newer on the Node.js 24 release line.
+
+```bash
+npm ci
+npm test
+```
+
+The tests exercise the composable in Vue and install the npm tarball in a temporary consumer project. `npm pack` builds the library automatically.
