@@ -1,13 +1,15 @@
 {
   "name": "@stradox/vue3-useclickoutside",
-  "version": "0.0.5",
+  "version": "1.0.10",
   "description": "Use a callback to run actions when a user clicks outside an element",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stradox4u/vue3-useclickoutside.git"
   },
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/use-click-outside.umd.cjs",
   "module": "./dist/use-click-outside.js",
   "types": "./dist/types/index.d.ts",
